@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "ArticlesController", type: :request do
   describe "POST /articles" do
     it "creates a new article" do
-      article_params = { article: { title: "Test Article", body: "Test Body" } }
+      article_params = { article: { title: "Test Article", content: "Test Body" } }
 
       expect {
         post "/articles", params: article_params
@@ -14,23 +14,23 @@ RSpec.describe "ArticlesController", type: :request do
   end
 
   describe "PATCH /articles/:id" do
-    let!(:article) { Article.create(title: "Initial Title", body: "Initial Body") }
+    let!(:article) { Article.create(title: "Initial Title", content: "Initial Content") }
 
     it "updates an existing article" do
       updated_title = "Updated Title"
-      updated_body = "Updated Body"
+      updated_content = "Updated Content"
 
-      patch "/articles/#{article.id}", params: { article: { title: updated_title, body: updated_body } }
+      patch "/articles/#{article.id}", params: { article: { title: updated_title, content: updated_content } }
 
       article.reload
 
       expect(article.title).to eq(updated_title)
-      expect(article.body).to eq(updated_body)
+      expect(article.content.body.to_plain_text).to eq(updated_content)
     end
   end
   
   describe "DELETE /articles/:id" do
-    let!(:article) { Article.create(title: "Initial Title", body: "Initial Body") }
+    let!(:article) { Article.create(title: "Initial Title", content: "Initial Body") }
     
     it "deletes an existing article" do
       expect {
