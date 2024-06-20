@@ -4,7 +4,7 @@
   <% @articles.each do |article| %>
     <a href="<%= article_path(article) %>" class="list-group-item list-group-item-action">
       <h5 class="mb-1"><%= article.title %></h5>
-      <p class="mb-1"><%= truncate(article.body, length: 500) %></p>
+      <p class="mb-1"><%= truncate(article.content.to_plain_text, length: 500) %></p>
     </a>
   <% end %>
 </div>
