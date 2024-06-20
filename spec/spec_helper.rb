@@ -91,4 +91,9 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  config.formatter = :documentation
+
+  config.after(:suite) do
+    puts "\nВсе тесты прошли успешно! 🎉"
+  end
 end
