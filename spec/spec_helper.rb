@@ -92,8 +92,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.formatter = :documentation
-
-  config.after(:suite) do
-    puts "\nВсе тесты прошли успешно! 🎉"
-  end
 end
