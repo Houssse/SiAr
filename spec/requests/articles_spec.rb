@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "ArticlesController", type: :request do
   describe "POST /articles" do
-    it "create a new article" do
+    it "creates a new article" do
       article_params = { article: { title: "Test Article", body: "Test Body" } }
 
-      expect{
-        post"/articles", params: article_params
+      expect {
+        post "/articles", params: article_params
       }.to change(Article, :count).by(1)
 
       expect(response).to redirect_to(article_path(Article.last))
