@@ -1,10 +1,10 @@
-<h1>All Articles</h1>
+<h1 class="my-4">All Articles</h1>
 
-<ul>
+<div class="list-group">
   <% @articles.each do |article| %>
-    <li>
-      <h2><%= link_to article.title, article_path(article) %></h2>
-      <p><%= truncate(article.body, length: 50) %></p>
-    </li>
+    <a href="<%= article_path(article) %>" class="list-group-item list-group-item-action">
+      <h5 class="mb-1"><%= article.title %></h5>
+      <p class="mb-1"><%= truncate(article.body, length: 500) %></p>
+    </a>
   <% end %>
-</ul>
+</div>
