@@ -12,8 +12,10 @@
       <p class="lead"><%= @article.content %></p>
     </div>
     <div class="card-footer d-flex justify-content-start">
-      <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-primary me-2" %>
-      <%= link_to 'Delete', article_path(@article), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger me-2" %>
+      <% if user_signed_in? && current_user == @article.user %>
+        <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-primary me-2" %>
+        <%= link_to 'Delete', article_path(@article), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-danger me-2" %>
+      <% end %>
       <%= link_to 'Back', root_path, class: "btn btn-light me-2" %>
     </div>
   </div>
