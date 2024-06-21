@@ -1,5 +1,11 @@
 require 'faker'
 
+User.create!(
+  name: 'Default User',
+  email: 'user@user.com',
+  password: '123456'
+)
+
 # Создаем случайное количество пользователей от 5 до 10
 num_users = rand(5..10)
 
