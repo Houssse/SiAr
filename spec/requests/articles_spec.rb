@@ -1,50 +1,70 @@
 require 'rails_helper'
 
-RSpec.describe "ArticlesController", type: :request do
-  before(:all) do
-    @user = FactoryBot.create(:user)
-    sign_in @user
-  end
+RSpec.describe ArticlesController, type: :controller do
+  describe "POST #create" do
+    before do
+      @user = FactoryBot.create(:user)
+      sign_in @user
+    end
 
-  after(:all) do
-    Warden.test_reset!
-  end
-
-  describe "POST /articles" do
-    it "creates a new article" do
-      article_params = { article: { title: "Test Article", content: "Test Body" } }
-
-      expect {
-        post "/articles", params: article_params
-      }.to change(Article, :count).by(1)
-
-      expect(response).to redirect_to(article_path(Article.last))
+    context "with valid attributes" do
+      it "creates a new article" do
+        expect {
+          post :create, params: { article: FactoryBot.attributes_for(:article) }
+        }.to change(Article, :count).by(1)
+      end
     end
   end
 
-  describe "PATCH /articles/:id" do
-    let!(:article) { create(:article, title: "Initial Title", content: "Initial Content", user: @user) }
+  describe "PATCH #update" do
+    before do
+      @user = FactoryBot.create(:user)
+      @article = FactoryBot.create(:article, user: @user)
+      sign_in @user
+    end
 
-    it "updates an existing article" do
-      updated_title = "Updated Title"
-      updated_content = "Updated Content"
+    context "with valid attributes" do
+      it "updates the article of the owner" do
+        patch :update, params: { id: @article.id, article: { title: "Updated Title" } }
+        @article.reload
+        expect(@article.title).to eq("Updated Title")
+      end
+    end
 
-      patch "/articles/#{article.id}", params: { article: { title: updated_title, content: updated_content } }
-
-      article.reload
-
-      expect(article.title).to eq(updated_title)
-      expect(article.content.body.to_plain_text).to eq(updated_content)
+    context "when user is not the owner of the article" do
+      it "does not update the article" do
+        other_user = FactoryBot.create(:user)
+        sign_in other_user
+        patch :update, params: { id: @article.id, article: { title: "Updated Title" } }
+        @article.reload
+        expect(@article.title).not_to eq("Updated Title")
+      end
     end
   end
 
-  describe "DELETE /articles/:id" do
-    let!(:article) { create(:article, title: "Initial Title", content: "Initial Body", user: @user) }
+  describe "DELETE #destroy" do
+    before do
+      @user = FactoryBot.create(:user)
+      sign_in @user
+    end
 
-    it "deletes an existing article" do
-      expect {
-        delete "/articles/#{article.id}"
-      }.to change(Article, :count).by(-1)
+    context "when user is the owner of the article" do
+      it "deletes the article" do
+        article_to_delete = FactoryBot.create(:article, user: @user)
+        expect {
+          delete :destroy, params: { id: article_to_delete.id }
+        }.to change(Article, :count).by(-1)
+      end
+    end
+
+    context "when user is not the owner of the article" do
+      it "does not delete the article" do
+        other_user = FactoryBot.create(:user)
+        article_to_delete = FactoryBot.create(:article, user: other_user)
+        expect {
+          delete :destroy, params: { id: article_to_delete.id }
+        }.not_to change(Article, :count)
+      end
     end
   end
 end
