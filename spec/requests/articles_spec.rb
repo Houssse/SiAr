@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe "ArticlesController", type: :request do
+  before(:all) do
+    @user = FactoryBot.create(:user)
+    sign_in @user
+  end
+
+  after(:all) do
+    Warden.test_reset!
+  end
+
   describe "POST /articles" do
     it "creates a new article" do
       article_params = { article: { title: "Test Article", content: "Test Body" } }
@@ -14,7 +23,7 @@ RSpec.describe "ArticlesController", type: :request do
   end
 
   describe "PATCH /articles/:id" do
-    let!(:article) { Article.create(title: "Initial Title", content: "Initial Content") }
+    let!(:article) { create(:article, title: "Initial Title", content: "Initial Content", user: @user) }
 
     it "updates an existing article" do
       updated_title = "Updated Title"
@@ -28,10 +37,10 @@ RSpec.describe "ArticlesController", type: :request do
       expect(article.content.body.to_plain_text).to eq(updated_content)
     end
   end
-  
+
   describe "DELETE /articles/:id" do
-    let!(:article) { Article.create(title: "Initial Title", content: "Initial Body") }
-    
+    let!(:article) { create(:article, title: "Initial Title", content: "Initial Body", user: @user) }
+
     it "deletes an existing article" do
       expect {
         delete "/articles/#{article.id}"
