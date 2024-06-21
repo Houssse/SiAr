@@ -2,7 +2,11 @@
   <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
       <h1 class="card-title display-4"><%= @article.title %></h1>
-      <p class="text-muted small">Created at: <%= @article.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+      <% if @article.user %>
+        <p class="text-muted small">Authored by <%= @article.user.name %> at <%= @article.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+      <% else %>
+        <p class="text-muted small">Created at <%= @article.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+      <% end %>
     </div>
     <div class="card-body">
       <p class="lead"><%= @article.content %></p>

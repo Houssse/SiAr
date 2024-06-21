@@ -1,5 +1,7 @@
 class User < ApplicationRecord
 
+  has_many :articles
+
   validates :name, presence: true
   
   # Include default devise modules. Others available are:
