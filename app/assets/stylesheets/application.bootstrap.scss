@@ -1,3 +1,8 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
 @import 'actiontext.css';
+
+.btn-hover-gray:hover {
+  background-color: #6c757d; /* Темно-серый цвет фона при наведении */
+  color: white; /* Белый цвет текста при наведении */
+}
