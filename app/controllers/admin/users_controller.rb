@@ -3,7 +3,8 @@ class Admin::UsersController < ApplicationController
   before_action :authorize_admin!
 
   def index 
-    @users = User.all
+    @q = User.ransack(params[:q])
+    @users = @q.result(distinct: true)
   end
 
   def update

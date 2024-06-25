@@ -1,29 +1,42 @@
 <div class="container my-4">
   <h1 class="display-4">Manage Users</h1>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>Admin</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
+  <%= search_form_for @q, url: admin_users_path, method: :get, html: { class: "form-inline mb-3" } do |f| %>
+    <div class="form-group mr-2">
+      <%= f.label :email_cont, "Search by Email:", class: "sr-only" %>
+      <%= f.search_field :email_cont, class: "form-control mr-sm-2", placeholder: "Enter email" %>
+    </div>
+    <%= f.submit "Search", class: "btn btn-primary mr-2" %>
+    <%= link_to "Reset", admin_users_path, class: "btn btn-secondary" %>
+  <% end %>
+
+  <div class="table-responsive">
+    <table class="table table-striped mt-3">
+      <thead class="thead-dark">
         <tr>
-          <td><%= user.email %></td>
-          <td><%= user.admin? ? 'Yes' : 'No' %></td>
-          <td>
-            <% unless current_user == user %>
-              <%= form_with model: [:admin, user], method: :put, local: true do |f| %>
-                <%= f.check_box :admin, class: "form-check-input" %>
-                <%= f.submit "Update", class: "btn btn-primary btn-sm" %>
-              <% end %>
-            <% end %>
-          </td>
+          <th><%= sort_link @q, :email, "Email" %></th>
+          <th><%= sort_link @q, :name, "Name" %></th>
+          <th><%= sort_link @q, :admin, "Admin" %></th>
+          <th>Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.email %></td>
+            <td><%= user.name %></td>
+            <td><%= user.admin? ? 'Yes' : 'No' %></td>
+            <td>
+              <% unless current_user == user %>
+                <%= form_with model: [:admin, user], method: :put, local: true, class: "d-inline-block" do |f| %>
+                  <%= f.check_box :admin, class: "form-check-input" %>
+                  <%= f.submit "Update", class: "btn btn-primary btn-sm ml-2" %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
