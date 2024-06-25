@@ -6,6 +6,13 @@ User.create!(
   password: '123456'
 )
 
+User.create!(
+  name: 'Admin User',
+  email: 'admin@admin.com',
+  password: '123456',
+  admin: true
+)
+
 # Создаем случайное количество пользователей от 5 до 10
 num_users = rand(5..10)
 
