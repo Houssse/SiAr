@@ -3,8 +3,11 @@ Rails.application.routes.draw do
 
   resources :articles
 
+  namespace :admin do
+    resources :users, only: %i[ index update ]
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
   root "home_pages#index"
 end

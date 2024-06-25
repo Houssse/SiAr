@@ -1,0 +1,29 @@
+<div class="container my-4">
+  <h1 class="display-4">Manage Users</h1>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>Admin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.email %></td>
+          <td><%= user.admin? ? 'Yes' : 'No' %></td>
+          <td>
+            <% unless current_user == user %>
+              <%= form_with model: [:admin, user], method: :put, local: true do |f| %>
+                <%= f.check_box :admin, class: "form-check-input" %>
+                <%= f.submit "Update", class: "btn btn-primary btn-sm" %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
