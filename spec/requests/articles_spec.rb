@@ -63,7 +63,22 @@ RSpec.describe ArticlesController, type: :controller do
         article_to_delete = FactoryBot.create(:article, user: other_user)
         expect {
           delete :destroy, params: { id: article_to_delete.id }
-        }.not_to change(Article, :count)
+        }.to_not change(Article, :count)
+      end
+    end
+
+    context "when user is an admin" do
+      before do
+        @admin = FactoryBot.create(:user, email: 'admin@example.com', admin: true)
+        sign_in @admin
+      end
+
+      it "deletes any article" do
+        other_user = FactoryBot.create(:user)
+        article_to_delete = FactoryBot.create(:article, user: other_user)
+        expect {
+          delete :destroy, params: { id: article_to_delete.id }
+        }.to change(Article, :count).by(-1)
       end
     end
   end
