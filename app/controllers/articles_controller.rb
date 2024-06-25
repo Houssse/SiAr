@@ -47,7 +47,7 @@ class ArticlesController < ApplicationController
   end
 
   def authorize_user!
-    unless current_user == @article.user
+    unless @article.user == current_user || current_user.admin?
       redirect_to root_path
     end
   end
