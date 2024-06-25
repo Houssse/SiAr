@@ -90,6 +90,7 @@ SiAr - это проект для размещения и управления �
 - Database Cleaner
 - Factory Bot Rails
 - RSpec Rails
+- Ransack
 
 Проект также использует JavaScript с esbuild и CSS с Bootstrap.
 
