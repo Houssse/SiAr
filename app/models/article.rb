@@ -3,6 +3,7 @@ class Article < ApplicationRecord
 
   belongs_to :user
   has_rich_text :content
+  has_many :comments, dependent: :destroy
 
   validates :title, length: { minimum: 5, maximum: 100 }
   validate :content_length
