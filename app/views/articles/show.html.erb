@@ -28,9 +28,11 @@
 <div class="container my-4">
   <h2>Комментарии</h2>
 
-  <!-- Форма для добавления нового комментария -->
-  <%= turbo_frame_tag "new_comment" do %>
-    <%= render 'comments/form', article: @article, comment: @article.comments.new %>
+  <% if user_signed_in? %>
+    <!-- Форма для добавления нового комментария -->
+    <%= turbo_frame_tag "new_comment" do %>
+      <%= render 'comments/form', article: @article, comment: @article.comments.new %>
+    <% end %>
   <% end %>
 
   <!-- Отображение существующих комментариев -->
