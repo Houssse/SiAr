@@ -24,3 +24,17 @@
     </div>
   </div>
 </div>
+
+<div class="container my-4">
+  <h2>Комментарии</h2>
+
+  <!-- Форма для добавления нового комментария -->
+  <%= turbo_frame_tag "new_comment" do %>
+    <%= render 'comments/form', article: @article, comment: @article.comments.new %>
+  <% end %>
+
+  <!-- Отображение существующих комментариев -->
+  <%= turbo_frame_tag "comments" do %>
+    <%= render @article.comments.where(parent_id: nil) %> <!-- Отображаем только корневые комментарии -->
+  <% end %>
+</div>

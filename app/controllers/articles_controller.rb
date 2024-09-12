@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = current_user.articles.build
+    @comment = @article.comments.new
   end
 
   def create

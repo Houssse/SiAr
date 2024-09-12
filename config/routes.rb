@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :articles
+  resources :articles do
+    resources :comments do
+      get 'new_reply', on: :collection
+    end
+  end
 
   namespace :admin do
     resources :users, only: %i[ index update ]
