@@ -15,6 +15,7 @@ echo "Dropping and recreating the database..."
 bundle exec rake db:drop RAILS_ENV=production || true  # Используем || true, чтобы игнорировать ошибку, если база данных не существует
 bundle exec rake db:create RAILS_ENV=production
 bundle exec rake db:migrate RAILS_ENV=production
+bundlt exec rake db:seed RAILS_ENV=production
 bundle exec rails action_text:install RAILS_ENV=production 
 
 
