@@ -36,7 +36,9 @@
   <% end %>
 
   <!-- Отображение существующих комментариев -->
-  <%= turbo_frame_tag "comments" do %>
-    <%= render @article.comments.where(parent_id: nil) %> <!-- Отображаем только корневые комментарии -->
-  <% end %>
+  <div class="my-4">
+    <%= turbo_frame_tag "comments" do %>
+      <%= render @article.comments.where(parent_id: nil) %> <!-- Отображаем только корневые комментарии -->
+    <% end %>
+  </div>
 </div>

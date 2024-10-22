@@ -1,6 +1,6 @@
 <%= turbo_frame_tag dom_id(comment) do %>
   <div class="comment mb-3 p-3 border rounded">
-    <p><strong><%= comment.user.email %>:</strong> <%= comment.body %></p>
+    <p><strong><%= comment.user.name %>:</strong> <%= comment.body %></p>
 
     <% if user_signed_in? && (current_user == comment.user || current_user.admin?) %>
       <%= link_to 'Удалить', article_comment_path(comment.article, comment), 
