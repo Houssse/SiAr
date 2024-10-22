@@ -41,4 +41,19 @@ end
   )
 end
 
+articles = Article.all
+
+# Для каждой статьи создаем комментарии
+articles.each do |article|
+  3.times do
+    random_user = users.sample
+
+    # Добавляем комментарий к текущей статье
+    article.comments.create!(
+      body: Faker::Lorem.sentence(word_count: 10),
+      user: random_user
+    )
+  end
+end
+
 puts "Seed finished"
