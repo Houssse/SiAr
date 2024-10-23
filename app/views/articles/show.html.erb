@@ -10,6 +10,11 @@
     </div>
     <div class="card-body">
       <p class="lead"><%= @article.content %></p>
+      
+      <!-- Блок лайков и дизлайков -->
+      <div id="likes">
+        <%= render 'likes/likes', article: @article %>
+      </div>
     </div>
     <div class="card-footer d-flex justify-content-start">
       <% if user_signed_in? %>

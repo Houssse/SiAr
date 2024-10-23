@@ -2,12 +2,35 @@ class LikesController < ApplicationController
   before_action :find_likeable
 
   def create
-    like = @likeable.likes.find_or_initiaze_by(user: current_user)
-    like.like_type = params[:like_type]
+    like = @likeable.likes.find_or_initialize_by(user: current_user)
 
-    if lake.save
+    if params[:like_type].to_i == 1
+
+      if like.persisted? && like.like_type == 1
+        # Если лайк существует, удаляем его
+        like.destroy
+        return redirect_back(fallback_location: root_path)
+      end
+
+      like.like_type = 1  # Устанавливаем лайк
+
+    elsif params[:like_type].to_i == -1
+
+      if like.persisted? && like.like_type == -1
+        # Если дизлайк существует, удаляем его
+        like.destroy
+        return redirect_back(fallback_location: root_path)
+      end
+
+      like.like_type = -1  # Устанавливаем дизлайк
     end
-    redirect_back(fallback_location: root_path)
+
+    like.save
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_back(fallback_location: root_path) }
+    end
   end
 
   private

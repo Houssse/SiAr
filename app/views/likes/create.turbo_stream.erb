@@ -1,0 +1,10 @@
+<%= turbo_stream.replace "likes_section" do %>
+  <div class="d-flex align-items-center" id="likes_section">
+    <div class="me-3">
+      <%= pluralize(@likeable.likes_count, 'Like') %>
+      <%= link_to "👍", article_likes_path(@likeable, like_type: 1), data: { turbo_method: :post }, remote: true, class: "btn btn-outline-success me-2" %>
+      <%= pluralize(@likeable.dislikes_count, 'Dislike') %>
+      <%= link_to "👎", article_likes_path(@likeable, like_type: -1), data: { turbo_method: :post }, remote: true, class: "btn btn-outline-danger" %>
+    </div>
+  </div>
+<% end %>

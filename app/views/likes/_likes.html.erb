@@ -1,0 +1,14 @@
+<div id="likes_section">
+  <div class="d-flex align-items-center">
+    <div class="me-3">
+      <%= pluralize(@article.likes_count, 'Like') %>
+      <% if user_signed_in? %>
+        <%= link_to "👍", article_likes_path(@article, like_type: 1), data: { turbo_method: :post }, remote: true, class: "btn btn-outline-success me-2" %>
+      <% end %>
+      <%= pluralize(@article.dislikes_count, 'Dislike') %>
+      <% if user_signed_in? %>
+        <%= link_to "👎", article_likes_path(@article, like_type: -1), data: { turbo_method: :post }, remote: true, class: "btn btn-outline-danger" %>
+      <% end %>
+    </div>
+  </div>
+</div>

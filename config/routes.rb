@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get 'new_reply', on: :collection
     end
 
-    resources :lokes, only: [:create]
+    resources :likes, only: [:create]
   end
 
   namespace :admin do

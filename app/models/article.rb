@@ -10,4 +10,12 @@ class Article < ApplicationRecord
 
   validates :title, length: { minimum: 5, maximum: 100 }
   validate :content_length
+
+  def likes_count
+    likes.where(like_type: 1).count
+  end
+
+  def dislikes_count
+    likes.where(like_type: -1).count
+  end
 end
