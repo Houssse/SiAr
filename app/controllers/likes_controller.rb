@@ -1,4 +1,5 @@
 class LikesController < ApplicationController
+  before_action :authenticate_user!, only: [:create]
   before_action :find_likeable
 
   def create
@@ -30,6 +31,7 @@ class LikesController < ApplicationController
     respond_to do |format|
       format.turbo_stream
       format.html { redirect_back(fallback_location: root_path) }
+      format.json { render json: { success: true }, status: :ok }
     end
   end
 
