@@ -2,6 +2,7 @@ class User < ApplicationRecord
 
   has_many :articles
   has_many :comments
+  has_many :likes, dependent: :destroy
 
   validates :name, presence: true
   
