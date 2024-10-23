@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     resources :comments do
       get 'new_reply', on: :collection
     end
+
+    resources :lokes, only: [:create]
   end
 
   namespace :admin do
