@@ -54,6 +54,17 @@ articles.each do |article|
       user: random_user
     )
   end
+
+  10.times do
+    random_user = users.sample
+      Like.create(user: random_user, likeable: article, like_type: 1)
+  end
+
+  10.times do
+    random_user = users.sample
+      Like.create(user: random_user, likeable: article, like_type: -1)
+  end
+
 end
 
 puts "Seed finished"
