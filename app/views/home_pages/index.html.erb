@@ -1,6 +1,18 @@
 <div class="container my-4">
   <h1 class="display-4">All Articles</h1>
 
+  <div class="mb-3">
+  <span>Sort by:</span>
+  
+  <%= link_to 'Likes', root_path(sort_order: 'likes_count', sort_direction: 'desc'), class: "btn btn-link" %>
+
+  <% if @sort_order == 'created_at' && @sort_direction == 'asc' %>
+    <%= link_to 'Oldest', root_path(sort_order: 'created_at', sort_direction: 'desc'), class: "btn btn-link" %>
+  <% else %> 
+    <%= link_to 'Newest', root_path(sort_order: 'created_at', sort_direction: 'asc'), class: "btn btn-link" %>
+  <% end %>
+</div>
+
   <div class="list-group">
     <% @articles.each do |article| %>
       <a href="<%= article_path(article) %>" class="list-group-item list-group-item-action">

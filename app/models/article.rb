@@ -11,4 +11,8 @@ class Article < ApplicationRecord
 
   validates :title, length: { minimum: 5, maximum: 100 }
   validate :content_length
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "title", "likes_count", "dislikes_count"] #атрибуты для сортировки
+  end
 end
