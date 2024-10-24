@@ -6,11 +6,20 @@
       <a href="<%= article_path(article) %>" class="list-group-item list-group-item-action">
         <h5 class="mb-1"><%= article.title %></h5>
         <p class="mb-1"><%= truncate(article.content.to_plain_text, length: 500) %></p>
-        <% if article.user %>
-          <p class="text-muted small">Authored by <%= article.user.name %> at <%= article.created_at.strftime("%d/%m/%Y %H:%M") %></p>
-        <% else %>
-          <p class="text-muted small">Created at <%= article.created_at.strftime("%d/%m/%Y %H:%M") %></p>
-        <% end %>
+
+        <div class="d-flex justify-content-between align-items-center mt-2">
+          <% if article.user %>
+            <p class="text-muted small mb-0">Authored by <%= article.user.name %> at <%= article.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+          <% else %>
+            <p class="text-muted small mb-0">Created at <%= article.created_at.strftime("%d/%m/%Y %H:%M") %></p>
+          <% end %>
+
+          <!-- Количество лайков и дизлайков -->
+          <div class="text-end">
+            <span class="badge bg-success me-2"><%= article.likes_count %> Likes</span>
+            <span class="badge bg-danger"><%= article.dislikes_count %> Dislikes</span>
+          </div>
+        </div>
       </a>
     <% end %>
   </div>
